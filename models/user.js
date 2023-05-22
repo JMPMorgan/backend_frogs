@@ -14,8 +14,8 @@ const UserSchema = Schema({
   },
   items: {
     type: String,
-    required: [true, "Items is required"],
-    default: " ",
+    required: false,
+    default: "",
   },
   createdAt: {
     type: Date,

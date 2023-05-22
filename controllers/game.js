@@ -49,7 +49,7 @@ const buyItem = async (req, res) => {
         msg: "No tienes suficientes monedas",
       });
     }
-    const items = user.items != " " ? JSON.parse(user.items) : null;
+    const items = user.items != "" ? JSON.parse(user.items) : null;
     if (Array.isArray(items)) {
       items.push(item);
       user.items = JSON.stringify(items);
@@ -176,7 +176,7 @@ const getUser = async (req, res) => {
     const { id } = req.params;
     const user = await User.findById(id);
     let items = [];
-    if (user.items != " ") {
+    if (user.items != "") {
       const itemsUser = JSON.parse(user.items);
       items = itemsUser;
     }
