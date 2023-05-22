@@ -16,8 +16,8 @@ const router = new Router();
 //  [x]:Sign Up user
 //  [x]:login user
 //  [x]:Obtener las monedas
-//  [ ]:Obtener los objetos comprados
-//  [ ]:Comprar item
+//  [x]:Obtener los objetos comprados
+//  [x]:Comprar item
 //  [x]:Equipar objeto
 //  [x]:Obtener el objeto equipado
 router.get("/:id", getCoins);

@@ -4,11 +4,11 @@ const equipItem = async (req, res) => {
   try {
     const { id, item } = req.params;
     const user = await User.findById(id);
-    user.item_equipped = item;
+    user.item_equipped = item == "Nada" ? " " : item;
     await user.save();
     return res.json({
       success: true,
-      data: user,
+      data: user.item_equipped,
       msg: "Equipado con exito",
     });
   } catch (error) {
@@ -41,7 +41,7 @@ const getItemequip = async (req, res) => {
 const buyItem = async (req, res) => {
   try {
     const { id } = req.params;
-    const { item, cost } = req.body;
+    const { item, cost } = req.query;
     const user = await User.findById(id);
     if (user.coins - cost < 0) {
       return res.status(500).json({
@@ -117,7 +117,7 @@ const getCoins = async (req, res) => {
 
 const newUser = async (req, res) => {
   try {
-    const { name, password } = req.body;
+    const { name, password } = req.query;
     const existsUser = await User.findOne({ name });
     if (existsUser) {
       return res.status(500).json({
@@ -148,7 +148,7 @@ const newUser = async (req, res) => {
 
 const signUp = async (req, res) => {
   try {
-    const { name, password } = req.body;
+    const { name, password } = req.query;
     const user = await User.findOne({ name, password });
     if (!user) {
       return res.status(500).json({
@@ -160,7 +160,7 @@ const signUp = async (req, res) => {
     return res.json({
       success: true,
       msg: "Usuario Obtenido",
-      data: user,
+      data: user._id,
     });
   } catch (error) {
     console.log(error);
@@ -175,12 +175,19 @@ const getUser = async (req, res) => {
   try {
     const { id } = req.params;
     const user = await User.findById(id);
+    let items = [];
+    if (user.items != " ") {
+      const itemsUser = JSON.parse(user.items);
+      items = itemsUser;
+    }
     return res.json({
       success: true,
       msg: "Usuario Obtenido",
       data: user,
+      items,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       msg: "Error al conseguir la informacion del usuario.",
