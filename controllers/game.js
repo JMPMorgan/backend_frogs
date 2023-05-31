@@ -195,6 +195,26 @@ const getUser = async (req, res) => {
   }
 };
 
+const setCoins = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+    user.coins = user.coins + 50;
+    await user.save();
+    return res.json({
+      success: true,
+      msg: "Coins Actualizadas con exito",
+      data: user.coins,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      msg: "Error al insertar monedas al ganador",
+    });
+  }
+};
+
 module.exports = {
   buyItem,
   equipItem,
@@ -203,5 +223,6 @@ module.exports = {
   getItems,
   getUser,
   signUp,
+  setCoins,
   newUser,
 };

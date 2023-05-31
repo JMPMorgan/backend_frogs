@@ -8,6 +8,7 @@ const {
   newUser,
   getUser,
   signUp,
+  setCoins,
 } = require("../controllers/game");
 
 const router = new Router();
@@ -35,5 +36,7 @@ router.get("/item/:id", getItemequip);
 router.get("/item/:id/:item", equipItem);
 
 router.post("/item/:id", buyItem);
+
+router.get("/game/:id", setCoins);
 
 module.exports = router;
